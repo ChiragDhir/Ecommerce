@@ -1,0 +1,54 @@
+<%- include("../partials/header") %> 
+<%- include("../partials/navbar") %> 
+
+<main class="container">
+<h2 class="display-5">Cart Items</h2>
+<%for(let item of user.cart){%>
+    <div class="container bcontent"> 
+        <hr />
+        <div class="card" style="width: 500px;">
+            <div class="row no-gutters">
+                <div class="col-sm-5">
+                    <img class="card-img" src="<%= item.img %> " alt="Card">
+                </div>
+                <div class="col-sm-7">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= item.name %> </h5>
+                        <p class="card-text"><strong>&#x20B9; <%= item.price %></strong> </p>
+                        <p class="card-text"><%= item.desc.substring(0,50) %> </p>
+                    
+                        <form action="/user/<%=item._id%>/remove?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%}%>
+<hr>
+<% let totalAmount=0 %> 
+<table style="width:100%">
+    <tr>
+      <th>Item Name</th>
+      <th>Price</th>
+    </tr>
+    <%for(let item of user.cart){%>
+        <%totalAmount+=item.price%>
+    <tr>
+      <td><%= item.name %>: </td>
+      <td>&#8377;<%= item.price %> </td>
+    </tr>
+<%}%>
+<tr>
+    <td><strong>Total:</strong></td>
+    <td><strong>&#8377;<%= totalAmount %> </strong></td>
+</tr>
+</table>
+<div class="mt-2">
+<form action="">
+<button type="submit" class="btn btn-success btn-small">Proceed</button>
+</form>
+</div>
+</main>
+<%- include("../partials/footer") %> 
